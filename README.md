@@ -62,9 +62,9 @@ This is a script used to create and delete FSS snapshots based on a pre-defined 
 
 The scheduler can be used in three ways.
 
-***Option 1.*** As a stand alone script - fss-scheduler.py. This can be placed in cron job to run every one hour. The script will create and delete (expire) snapshots as defined in scheduler.cfg file or using FSS_CKPT_SHCEDULER_CFG= environment variable.
+***Option 1.*** As a stand alone script - fss-scheduler.py. This can be placed in cron job to run every one hour. The script will create and delete (expire) snapshots as defined in scheduler.cfg file or using *FSS_CKPT_SHCEDULER_CFG* environment variable.
 
-***Option 2.*** This includes a Dockerfile that can be used to build a docker image. This is based on alpine Linux and includes all the required modules including oci api. Run the docker image every hour.
+***Option 2.*** This includes a Dockerfile that can be used to build a docker image. This is based on alpine Linux and includes all the required modules including oci api. Run the docker image every hour. This is a container and has no pre-requisites such as OCI API module or other libraries. 
 
 ***Option 3.*** Run in K8s cluster with the above docker image  as cron job 
 
