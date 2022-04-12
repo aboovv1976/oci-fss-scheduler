@@ -2,7 +2,7 @@
 
 This repository provides a few techniques to manage OCI FSS snapshots. Deletion of snapshots based on age and automatically scheduling the creation and deletion of snapshots. 
 
-***1) OCI FSS Snapshot delete***
+***1) OCI FSS Snapshot delete***  
 ***2) OCI FSS Snapshot Scheduler***
 
 # OCI FSS Snapshot delete
