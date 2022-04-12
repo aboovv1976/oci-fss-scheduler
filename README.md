@@ -22,6 +22,7 @@ In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cf
 
 #### Sample
 
+```
 $ python ./fss-scheduler.py  
 2022-04-12T15:30:16.245Z - fss-scheduler - INFO - Creating OCI config file from environment variables failed, error:'OCI_USER_ID' Using default config file  
 2022-04-12T15:30:16.630Z - fss-scheduler - INFO - Expired snapshot found for hourly_snapshot: hourly_snapshot_2022_04_12-02_49_20, Expired 2022/04/12 03:49:20   
@@ -36,6 +37,7 @@ Daily_Snapshot =  1d:1m
 Monthly_SnapShot = 1m:1y  
 Yearly_Snapshot =  1y:1c  
 $  
+```
 
 ### docker
 
@@ -62,7 +64,8 @@ OCI_KEY_DIGEST=a3:49:..<removed>
 OCI_REGION=us-ashburn-1  
 OCI_COMPARTMENT_ID=ocid1.compartment.oc1..<removed>  
 FSS_CKPT_SHCEDULER_CFG={"ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa": {"hourly_snapshot": "1h:1d", "daily_snapshot": "1d:1m", "monthly_snapshot": "1m:6m"}, "ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa": {"monthly_snapshot": "1m:2y", "yearly_snapshot": "1y:1c"}}  
-OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "OCI_KEY=`cat ~/.oci/private_key.pem | base64 -w 0`" >> env>  ```
+OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "OCI_KEY=`cat ~/.oci/private_key.pem | base64 -w 0`" >> env>  
+```
 
   
 ### Kubernetes
