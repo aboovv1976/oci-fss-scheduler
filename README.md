@@ -16,9 +16,9 @@ The scheduler can be used in three ways.
 
 In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py (one time use) or install it in cron to run every hour. The OCI API python modules should be installed. See [OCI SDK for Python](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/pythonsdk.htm). 
 
-The advantage of using docker image is that it comes with all the modules installed and should not have any other dependancies. 
-
 ### docker
+
+The advantage of using docker image is that it comes with all the modules installed and should not have any other dependancies. 
 
 > sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler
 
@@ -55,10 +55,15 @@ The Snapshots created by the scheduler will start with Snapshot prefix.
 > *Hourly_Snapshot = 1h:1d*  
 
 > *Daily_Snapshot =  1d:1m*  
+
 > *Monthly_SnapShot = 1m:6m* 
+
 > *[ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: FS2*
-> *Monthly_SnapShot = 1m:2y* 
+
+> *Monthly_SnapShot = 1m:2y*
+
 > *Yearly_SnapShot = 1y:1c*  
+
 
 The *Hourly_Snapshot = 1h:1d* entry above will create snapshot every hour and keep it for a day. h for hour, d for day, m for month, y for year and c for century. 
 
