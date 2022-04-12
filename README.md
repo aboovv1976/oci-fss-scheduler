@@ -70,7 +70,7 @@ These are the environment variables and the values can be directly copied from t
 
 ## Image
 
-The Docker file is provided. However, the image is available at iad.ocir.io/fsssolutions/fss-sn-scheduler
+The Docker file is provided. However, the image is available at **iad.ocir.io/fsssolutions/fss-sn-scheduler**
 
 ## Kubernetes cron job
 
