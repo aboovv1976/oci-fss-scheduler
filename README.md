@@ -12,9 +12,31 @@ The scheduler can be used in three ways.
 
 3. Run in K8s cluster with the above docker image  as cron job 
 
-### Simple usage
+### Standalone script
 
-In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py (one time use) or install it in cron to run every hour. The OCI API python modules should be installed. See [OCI SDK for Python](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/pythonsdk.htm). 
+In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py (one time use) 
+
+- The OCI API python modules should be installed. See [OCI SDK for Python](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/pythonsdk.htm). 
+
+- install it in cron to run every hour. The user the script is installed as cron should have the OCI configuration created (or use the environment variable for OCI credentials).  [Configuring the CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliconfigure.htm)
+
+#### Sample
+
+$ python ./fss-scheduler.py 
+2022-04-12T15:30:16.245Z - fss-scheduler - INFO - Creating OCI config file from environment variables failed, error:'OCI_USER_ID' Using default config file
+2022-04-12T15:30:16.630Z - fss-scheduler - INFO - Expired snapshot found for hourly_snapshot: hourly_snapshot_2022_04_12-02_49_20, Expired 2022/04/12 03:49:20
+2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Deleted Snapshot: hourly_snapshot_2022_04_12-02_49_20
+2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_30_16, Expiry: 2022-04-12 16:30:16.630778
+2022-04-12T15:30:28.706Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_30_16
+$
+
+$ cat schedule.cfg
+[ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: Rclone-fs
+Hourly_Snapshot = 1h:1h
+Daily_Snapshot =  1d:1m
+Monthly_SnapShot = 1m:1y
+Yearly_Snapshot =  1y:1c
+$
 
 ### docker
 
@@ -24,6 +46,27 @@ The advantage of using docker image is that it comes with all the modules instal
 
 This will run just once but requires the above to be installed as a cronjob. The env file should be populated as mentioned in the next section. That is *FSS_CKPT_SHCEDULER_CFG* and OCI authentication environment variables. 
 
+#### Sample
+
+$ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler
+2022-04-12T15:41:15.601Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_41_15, Expiry: 2022-04-13 15:41:15.601073
+2022-04-12T15:41:18.354Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_41_15
+2022-04-12T15:41:18.424Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:monthly_snapshot_2022_04_12-15_41_18, Expiry: 2024-04-12 15:41:18.424715
+2022-04-12T15:41:28.678Z - fss-scheduler - INFO - Created Snapshot: monthly_snapshot_2022_04_12-15_41_18
+2022-04-12T15:41:28.679Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:yearly_snapshot_2022_04_12-15_41_28, Expiry: 2122-04-12 15:41:28.678960
+2022-04-12T15:41:30.713Z - fss-scheduler - INFO - Created Snapshot: yearly_snapshot_2022_04_12-15_41_28
+$ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler
+
+$ cat env
+OCI_USER_ID=ocid1.user.oc1..<removed>
+OCI_TENANCY_ID=ocid1.tenancy.oc1..<removed>
+OCI_KEY_DIGEST=a3:49:..<removed>
+OCI_REGION=us-ashburn-1
+OCI_COMPARTMENT_ID=ocid1.compartment.oc1..<removed>
+FSS_CKPT_SHCEDULER_CFG={"ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa": {"hourly_snapshot": "1h:1d", "daily_snapshot": "1d:1m", "monthly_snapshot": "1m:6m"},"ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa": {"monthly_snapshot": "1m:2y", "yearly_snapshot": "1y:1c"}}
+OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "OCI_KEY=`cat ~/.oci/private_key.pem | base64 -w 0`" >> env>
+
+  
 ### Kubernetes
 
 > kubectl apply -f k8s-cron.yaml
