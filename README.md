@@ -46,7 +46,7 @@ The advantage of using docker image is that it comes with all the modules instal
 This will run just once but requires the above to be installed as a cronjob. The env file should be populated as mentioned in the next section. That is *FSS_CKPT_SHCEDULER_CFG* and OCI authentication environment variables. 
 
 #### Sample
-
+```
 $ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler  
 2022-04-12T15:41:15.601Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_41_15, Expiry: 2022-04-13 15:41:15.601073  
 2022-04-12T15:41:18.354Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_41_15  
@@ -61,8 +61,8 @@ OCI_TENANCY_ID=ocid1.tenancy.oc1..<removed>
 OCI_KEY_DIGEST=a3:49:..<removed>  
 OCI_REGION=us-ashburn-1  
 OCI_COMPARTMENT_ID=ocid1.compartment.oc1..<removed>  
-FSS_CKPT_SHCEDULER_CFG={"ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa": {"hourly_snapshot": "1h:1d", "daily_snapshot": "1d:1m", "monthly_snapshot": "1m:6m"},"ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa": {"monthly_snapshot": "1m:2y", "yearly_snapshot": "1y:1c"}}  
-OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "OCI_KEY=`cat ~/.oci/private_key.pem | base64 -w 0`" >> env>  
+FSS_CKPT_SHCEDULER_CFG={"ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa": {"hourly_snapshot": "1h:1d", "daily_snapshot": "1d:1m", "monthly_snapshot": "1m:6m"}, "ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa": {"monthly_snapshot": "1m:2y", "yearly_snapshot": "1y:1c"}}  
+OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "OCI_KEY=`cat ~/.oci/private_key.pem | base64 -w 0`" >> env>  ```
 
   
 ### Kubernetes
