@@ -15,6 +15,7 @@ The schedule can be defined in two ways. One is using configuration file **sched
 ### Format 
 
 > *[\<OCID Of the FS\>]*
+
 > *SnapshotPrefix1 = frequency:expiry*
 > *SnapshotPrefix2 = frequency:expiry*
 > *SnapshotPrefix3 = frequency:expiry*
