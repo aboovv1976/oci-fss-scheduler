@@ -1,4 +1,4 @@
-# OCI FSS Scheduler
+# OCI FSS Snapshot Scheduler
 
 This is a script used to create and delete FSS snapshots based on a pre-defined schedule. 
 
