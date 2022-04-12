@@ -6,13 +6,13 @@ This is a script used to create and delete FSS snapshots based on a pre-defined 
 
 The scheduler can be used in three ways.
 
-1. As a stand alone script - fss-scheduler.py. This can be placed in cron job to run every one hour. The script will create and delete (expire) snapshots as defined in scheduler.cfg file or using FSS_CKPT_SHCEDULER_CFG= environment variable.
+**Option 1.** As a stand alone script - fss-scheduler.py. This can be placed in cron job to run every one hour. The script will create and delete (expire) snapshots as defined in scheduler.cfg file or using FSS_CKPT_SHCEDULER_CFG= environment variable.
 
-2. This includes a Dockerfile that can be used to build a docker image. This is based on alpine Linux and includes all the required modules including oci api. Run the docker image every hour.
+** Option 2.** This includes a Dockerfile that can be used to build a docker image. This is based on alpine Linux and includes all the required modules including oci api. Run the docker image every hour.
 
-3. Run in K8s cluster with the above docker image  as cron job 
+** Option 3.** Run in K8s cluster with the above docker image  as cron job 
 
-### Standalone script
+### Option 1: Standalone script
 
 In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py (one time use) 
 
@@ -39,7 +39,7 @@ Yearly_Snapshot =  1y:1c
 $  
 ```
 
-### docker
+### Option 2: docker
 
 The advantage of using docker image is that it comes with all the modules installed and should not have any other dependancies. 
 
@@ -68,7 +68,7 @@ OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "
 ```
 
   
-### Kubernetes
+### Option 3: Kubernetes
 
 > kubectl apply -f k8s-cron.yaml
 
