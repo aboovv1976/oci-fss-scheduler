@@ -234,7 +234,9 @@ The Docker file is provided. However, the image is available at ***iad.ocir.io/f
 
 Configure it for every hour as follows. The user for which this crontab is configured should have configured OCI CLI access. [Configuring the CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliconfigure.htm). If its not configured, the OCI environment variables should be configured for authentication. 
 
+```
 0 * * * *  python /home/opc/scheduler/fss-scheduler.py
+```
 
 ## Kubernetes cron job
 
