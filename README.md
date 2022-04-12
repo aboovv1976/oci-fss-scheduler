@@ -36,7 +36,11 @@ Hourly_Snapshot = 1h:1h
 Daily_Snapshot =  1d:1m  
 Monthly_SnapShot = 1m:1y  
 Yearly_Snapshot =  1y:1c  
-$  
+$ 
+$ crontab -l
+* * * * *  python /home/opc/scheduler/fss-scheduler.py
+$ 
+
 ```
 
 ### Option 2: docker
