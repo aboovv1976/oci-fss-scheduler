@@ -74,6 +74,18 @@ OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "
 
 The environment variables should be updated in the k8s-cron.yaml file. See the next sections for the required environment variable. That is *FSS_CKPT_SHCEDULER_CFG* and OCI authentication environment variables. 
 
+#### Sample
+
+```
+# kubectl apply -f k8s-cron.yaml
+```
+(If you happened to catch the pod running. See the logs)
+```
+# kubectl logs fss-scheduler-27496334-vcbwl 
+2022-04-12T16:17:04.270Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:daily_snapshot_2022_04_12-16_17_04, Expiry: 2022-05-12 16:17:04.270005
+2022-04-12T16:17:04.270Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:daily_snapshot_2022_04_12-16_17_04, Expiry: 2022-05-12 16:17:04.270005
+2022-04-12T16:17:06.794Z - fss-scheduler - INFO - Created Snapshot: daily_snapshot_2022_04_12-16_17_04
+```
 ## Defining the schedule
 
 The schedule can be defined in two ways. One is using configuration file **schedule.cfg**. The file name can be overridden with environment variable **FSS_CKPT_SHCEDULER_CFG_FILE**
