@@ -71,3 +71,7 @@ These are the environment variables and the values can be directly copied from t
 ## Image
 
 The Docker file is provided. However, the image is available at iad.ocir.io/fsssolutions/fss-sn-scheduler
+
+## Kubernetes cron job
+
+If the scheduler to be run as a kubernetes job, a sample k8s-cron.yaml file is included along with this. The environment variables section needs to be filled. If feels insecure, use Kubernetes secrets for these environment variables instead. 
