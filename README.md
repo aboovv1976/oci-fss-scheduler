@@ -85,6 +85,42 @@ The environment variables should be updated in the k8s-cron.yaml file. See the n
 2022-04-12T16:17:04.270Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:daily_snapshot_2022_04_12-16_17_04, Expiry: 2022-05-12 16:17:04.270005
 2022-04-12T16:17:04.270Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:daily_snapshot_2022_04_12-16_17_04, Expiry: 2022-05-12 16:17:04.270005
 2022-04-12T16:17:06.794Z - fss-scheduler - INFO - Created Snapshot: daily_snapshot_2022_04_12-16_17_04
+
+$ cat k8s-cron.yaml 
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: fss-scheduler
+spec:
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+       spec:
+        containers:
+        - name: fss-scheduler
+          image: iad.ocir.io/fsssolutions/fss-sn-scheduler
+          command: [ "python" ]
+          args: [ "fss-scheduler.py" ]
+          env:
+            - name: OCI_USER_ID
+              value: <user ocid from ~/.oci/config>
+            - name: OCI_KEY
+              value: <paste output of cat ~/.oci/pvt_key.pem | base64 -w 0>
+            - name: OCI_KEY_DIGEST
+              value: <fingerprint from ~/.oci/config>
+            - name: OCI_TENANCY_ID
+              value: <tenancy ocid from ~/.oci/config>
+            - name: OCI_REGION
+              value: <oci region>
+            - name: OCI_COMPARTMENT_ID
+              value: <compartment ocid of the FSS resources>
+            - name: FSS_CKPT_SHCEDULER_CFG
+              value: <json string for the checkpoint schedule>
+        restartPolicy: Never
+$
 ```
 ## Defining the schedule
 
