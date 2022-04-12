@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: fss-scheduler
+spec:
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+       spec:
+        containers:
+        - name: fss-scheduler
+          image: iad.ocir.io/fsssolutions/fss-sn-scheduler
+          command: [ "python" ]
+          args: [ "fss-scheduler.py" ]
+          env:
+            - name: OCI_USER_ID
+              value: <user ocid from ~/.oci/config>
+            - name: OCI_KEY
+              value: <paste output of cat ~/.oci/pvt_key.pem | base64 -w 0>
+            - name: OCI_KEY_DIGEST
+              value: <fingerprint from ~/.oci/config>
+            - name: OCI_TENANCY_ID
+              value: <tenancy ocid from ~/.oci/config>
+            - name: OCI_REGION
+              value: <oci region
+            - name: OCI_COMPARTMENT_ID
+              value: <compartment ocid of the FSS resources>
+            - name: FSS_CKPT_SHCEDULER_CFG
+              value: <json string for the checkpoint schedule>
+        restartPolicy: Never
+
