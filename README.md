@@ -8,6 +8,24 @@ This is a script used to create and delete FSS snapshots based on a pre-defined 
 
 3. Run in K8s cluster with the above docker image  as cron job 
 
+## Usage
+
+In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py (one time use) or install it in cron to run every hour. The OCI API python modules should be installed. See [OCI SDK for Python](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/pythonsdk.htm). 
+
+The advantage of using docker image is that it comes with all the modules installed and should not have any other dependancies. 
+
+### docker
+
+> sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler
+
+This will run just once but requires the above to be installed as a cronjob. The env file should be populated as mentioned in the next section. That is *FSS_CKPT_SHCEDULER_CFG* and OCI authentication environment variables. 
+
+### Kubernetes
+
+kubectl apply -f k8s-cron.yaml
+
+The environment variables should be updated in the k8s-cron.yaml file. See the next sections for the required environment variable. That is *FSS_CKPT_SHCEDULER_CFG* and OCI authentication environment variables. 
+
 ## Defining the schedule
 
 The schedule can be defined in two ways. One is using configuration file **schedule.cfg**. The file name can be overridden with environment variable **FSS_CKPT_SHCEDULER_CFG_FILE**
@@ -70,7 +88,7 @@ These are the environment variables and the values can be directly copied from t
 
 ## Image
 
-The Docker file is provided. However, the image is available at **iad.ocir.io/fsssolutions/fss-sn-scheduler**
+The Docker file is provided. However, the image is available at ***iad.ocir.io/fsssolutions/fss-sn-scheduler***
 
 ## Kubernetes cron job
 
