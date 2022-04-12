@@ -22,20 +22,25 @@ In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cf
 
 #### Sample
 
-$ python ./fss-scheduler.py 
-2022-04-12T15:30:16.245Z - fss-scheduler - INFO - Creating OCI config file from environment variables failed, error:'OCI_USER_ID' Using default config file
-2022-04-12T15:30:16.630Z - fss-scheduler - INFO - Expired snapshot found for hourly_snapshot: hourly_snapshot_2022_04_12-02_49_20, Expired 2022/04/12 03:49:20
-2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Deleted Snapshot: hourly_snapshot_2022_04_12-02_49_20
-2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_30_16, Expiry: 2022-04-12 16:30:16.630778
-2022-04-12T15:30:28.706Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_30_16
-$
+$ python ./fss-scheduler.py  
+2022-04-12T15:30:16.245Z - fss-scheduler - INFO - Creating OCI config file from environment variables failed, error:'OCI_USER_ID' Using default config file. 
+2022-04-12T15:30:16.630Z - fss-scheduler - INFO - Expired snapshot found for hourly_snapshot: hourly_snapshot_2022_04_12-02_49_20, Expired 2022/04/12 03:49:20. 
+2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Deleted Snapshot: hourly_snapshot_2022_04_12-02_49_20. 
+2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_30_16, Expiry: 2022-04-12 16:30:16.630778. 
+2022-04-12T15:30:28.706Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_30_16. 
+$. 
 
 $ cat schedule.cfg
-[ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: Rclone-fs
+
+[ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: Rclone-fs. 
 Hourly_Snapshot = 1h:1h
+
 Daily_Snapshot =  1d:1m
+
 Monthly_SnapShot = 1m:1y
+
 Yearly_Snapshot =  1y:1c
+
 $
 
 ### docker
