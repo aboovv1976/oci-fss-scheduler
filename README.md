@@ -1,6 +1,8 @@
+
+
 This repository provides a few techniques to manage OCI FSS snapshots. Deletion of snapshots based on age and automatically scheduling the creation and deletion of snapshots. 
 
-# OCI FSS Snapshot delete script
+# OCI FSS Snapshot delete
 
 The repository provides fss-snapshot-delete.py as a standalone script to delete snapshots based on its age. This is a seperate script to the snapshot scheduler. 
 
