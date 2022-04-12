@@ -23,25 +23,19 @@ In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cf
 #### Sample
 
 $ python ./fss-scheduler.py  
-2022-04-12T15:30:16.245Z - fss-scheduler - INFO - Creating OCI config file from environment variables failed, error:'OCI_USER_ID' Using default config file. 
-2022-04-12T15:30:16.630Z - fss-scheduler - INFO - Expired snapshot found for hourly_snapshot: hourly_snapshot_2022_04_12-02_49_20, Expired 2022/04/12 03:49:20. 
-2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Deleted Snapshot: hourly_snapshot_2022_04_12-02_49_20. 
-2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_30_16, Expiry: 2022-04-12 16:30:16.630778. 
-2022-04-12T15:30:28.706Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_30_16. 
-$. 
-
-$ cat schedule.cfg
-
-[ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: Rclone-fs. 
-Hourly_Snapshot = 1h:1h
-
-Daily_Snapshot =  1d:1m
-
-Monthly_SnapShot = 1m:1y
-
-Yearly_Snapshot =  1y:1c
-
-$
+2022-04-12T15:30:16.245Z - fss-scheduler - INFO - Creating OCI config file from environment variables failed, error:'OCI_USER_ID' Using default config file  
+2022-04-12T15:30:16.630Z - fss-scheduler - INFO - Expired snapshot found for hourly_snapshot: hourly_snapshot_2022_04_12-02_49_20, Expired 2022/04/12 03:49:20   
+2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Deleted Snapshot: hourly_snapshot_2022_04_12-02_49_20  
+2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_30_16, Expiry: 2022-04-12 16:30:16.630778  
+2022-04-12T15:30:28.706Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_30_16  
+$  
+$ cat schedule.cfg  
+[ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: Rclone-fs  
+Hourly_Snapshot = 1h:1h  
+Daily_Snapshot =  1d:1m  
+Monthly_SnapShot = 1m:1y  
+Yearly_Snapshot =  1y:1c  
+$  
 
 ### docker
 
@@ -53,23 +47,22 @@ This will run just once but requires the above to be installed as a cronjob. The
 
 #### Sample
 
-$ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler
-2022-04-12T15:41:15.601Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_41_15, Expiry: 2022-04-13 15:41:15.601073
-2022-04-12T15:41:18.354Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_41_15
-2022-04-12T15:41:18.424Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:monthly_snapshot_2022_04_12-15_41_18, Expiry: 2024-04-12 15:41:18.424715
-2022-04-12T15:41:28.678Z - fss-scheduler - INFO - Created Snapshot: monthly_snapshot_2022_04_12-15_41_18
-2022-04-12T15:41:28.679Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:yearly_snapshot_2022_04_12-15_41_28, Expiry: 2122-04-12 15:41:28.678960
-2022-04-12T15:41:30.713Z - fss-scheduler - INFO - Created Snapshot: yearly_snapshot_2022_04_12-15_41_28
-$ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler
-
-$ cat env
-OCI_USER_ID=ocid1.user.oc1..<removed>
-OCI_TENANCY_ID=ocid1.tenancy.oc1..<removed>
-OCI_KEY_DIGEST=a3:49:..<removed>
-OCI_REGION=us-ashburn-1
-OCI_COMPARTMENT_ID=ocid1.compartment.oc1..<removed>
-FSS_CKPT_SHCEDULER_CFG={"ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa": {"hourly_snapshot": "1h:1d", "daily_snapshot": "1d:1m", "monthly_snapshot": "1m:6m"},"ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa": {"monthly_snapshot": "1m:2y", "yearly_snapshot": "1y:1c"}}
-OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "OCI_KEY=`cat ~/.oci/private_key.pem | base64 -w 0`" >> env>
+$ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler  
+2022-04-12T15:41:15.601Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_41_15, Expiry: 2022-04-13 15:41:15.601073  
+2022-04-12T15:41:18.354Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_41_15  
+2022-04-12T15:41:18.424Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:monthly_snapshot_2022_04_12-15_41_18, Expiry: 2024-04-12 15:41:18.424715  
+2022-04-12T15:41:28.678Z - fss-scheduler - INFO - Created Snapshot: monthly_snapshot_2022_04_12-15_41_18  
+2022-04-12T15:41:28.679Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:yearly_snapshot_2022_04_12-15_41_28, Expiry: 2122-04-12 15:41:28.678960  
+2022-04-12T15:41:30.713Z - fss-scheduler - INFO - Created Snapshot: yearly_snapshot_2022_04_12-15_41_28  
+$ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler  
+$ cat env  
+OCI_USER_ID=ocid1.user.oc1..<removed>  
+OCI_TENANCY_ID=ocid1.tenancy.oc1..<removed>  
+OCI_KEY_DIGEST=a3:49:..<removed>  
+OCI_REGION=us-ashburn-1  
+OCI_COMPARTMENT_ID=ocid1.compartment.oc1..<removed>  
+FSS_CKPT_SHCEDULER_CFG={"ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa": {"hourly_snapshot": "1h:1d", "daily_snapshot": "1d:1m", "monthly_snapshot": "1m:6m"},"ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa": {"monthly_snapshot": "1m:2y", "yearly_snapshot": "1y:1c"}}  
+OCI_KEY=LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVkt...<removed - generated using echo "OCI_KEY=`cat ~/.oci/private_key.pem | base64 -w 0`" >> env>  
 
   
 ### Kubernetes
@@ -84,34 +77,23 @@ The schedule can be defined in two ways. One is using configuration file **sched
 
 ### Format 
 
-> *[\<OCID Of the FS\>]*
-
-> *SnapshotPrefix1 = frequency:expiry*
-
-> *SnapshotPrefix2 = frequency:expiry*
-
-> *SnapshotPrefix3 = frequency:expiry*
-
-> *...*
+> *[\<OCID Of the FS\>]*  
+> *SnapshotPrefix1 = frequency:expiry*  
+> *SnapshotPrefix2 = frequency:expiry*  
+> *SnapshotPrefix3 = frequency:expiry*  
+> *...*  
 
 The Snapshots created by the scheduler will start with Snapshot prefix.
 
 #### Example cfg file
 
-> *[ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: FS1*
-
+> *[ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: FS1*  
 > *Hourly_Snapshot = 1h:1d*  
-
 > *Daily_Snapshot =  1d:1m*  
-
-> *Monthly_SnapShot = 1m:6m* 
-
-> *[ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: FS2*
-
-> *Monthly_SnapShot = 1m:2y*
-
+> *Monthly_SnapShot = 1m:6m*  
+> *[ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: FS2*  
+> *Monthly_SnapShot = 1m:2y*  
 > *Yearly_SnapShot = 1y:1c*  
-
 
 The *Hourly_Snapshot = 1h:1d* entry above will create snapshot every hour and keep it for a day. h for hour, d for day, m for month, y for year and c for century. 
 
@@ -131,18 +113,13 @@ The OCI CLI/API access needs to be configured. Refer [Configuring the CLI](https
 
 These are the environment variables and the values can be directly copied from the OCI config file (*~/.oci/config*)
 
-> OCI_USER_ID=\<user ocid from ~/.oci/config\>
-
-> OCI_TENANCY_ID=\<tenancy ocid from ~/.oci/config\>
-
-> OCI_KEY_DIGEST=\<fingerprint from ~/.oci/config\>
-
-> OCI_REGION=\<oci region\>
-
-> OCI_COMPARTMENT_ID=\<compartment ocid of the FSS resources\>
-
-> OCI_KEY=\<paste output of * cat ~/.oci/pvt_key.pem | base64 -w 0 * \>
-
+> OCI_USER_ID=\<user ocid from ~/.oci/config\>  
+> OCI_TENANCY_ID=\<tenancy ocid from ~/.oci/config\>  
+> OCI_KEY_DIGEST=\<fingerprint from ~/.oci/config\>  
+> OCI_REGION=\<oci region\>  
+> OCI_COMPARTMENT_ID=\<compartment ocid of the FSS resources\>  
+> OCI_KEY=\<paste output of * cat ~/.oci/pvt_key.pem | base64 -w 0 * \>  
+  
 ## Image
 
 The Docker file is provided. However, the image is available at ***iad.ocir.io/fsssolutions/fss-sn-scheduler***
