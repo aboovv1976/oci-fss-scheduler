@@ -17,8 +17,11 @@ The schedule can be defined in two ways. One is using configuration file **sched
 > *[\<OCID Of the FS\>]*
 
 > *SnapshotPrefix1 = frequency:expiry*
+
 > *SnapshotPrefix2 = frequency:expiry*
+
 > *SnapshotPrefix3 = frequency:expiry*
+
 > *...*
 
 The Snapshots created by the scheduler will start with Snapshot prefix.
@@ -26,12 +29,16 @@ The Snapshots created by the scheduler will start with Snapshot prefix.
 #### Example cfg file
 
 > *[ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: FS1*
-> *Hourly_Snapshot = 1h:1d*  # Create Snapshot every hour and keep for a day 
-> *Daily_Snapshot =  1d:1m*  # Create every day and keep for 1 months
-> *Monthly_SnapShot = 1m:6m* # Create every month and keep for 6 months
+
+> *Hourly_Snapshot = 1h:1d*  
+
+> *Daily_Snapshot =  1d:1m*  
+> *Monthly_SnapShot = 1m:6m* 
 > *[ocid1.filesystem.oc1.iad.aaaaaaaaaaczrj4infqwillqojxwiotjmfsc2ylefuzaaaaa] # FSName: FS2*
-> *Monthly_SnapShot = 1m:2y* # Create every month and keep 2 months
-> *Yearly_SnapShot = 1y:1c*  # Create every year and keep for 100 years
+> *Monthly_SnapShot = 1m:2y* 
+> *Yearly_SnapShot = 1y:1c*  
+
+The *Hourly_Snapshot = 1h:1d* entry above will create snapshot every hour and keep it for a day. h for hour, d for day, m for month, y for year and c for century. 
 
 Another option to specify the schedules without this config file is using environment variable **FSS_CKPT_SHCEDULER_CFG**. This will be handy if the scheduler is started in docker or as a Kubernettes cron job
 
@@ -50,10 +57,15 @@ The OCI CLI/API access needs to be configured. Refer [Configuring the CLI](https
 These are the environment variables and the values can be directly copied from the OCI config file (*~/.oci/config*)
 
 > OCI_USER_ID=\<user ocid from ~/.oci/config\>
+
 > OCI_TENANCY_ID=\<tenancy ocid from ~/.oci/config\>
+
 > OCI_KEY_DIGEST=\<fingerprint from ~/.oci/config\>
+
 > OCI_REGION=\<oci region\>
+
 > OCI_COMPARTMENT_ID=\<compartment ocid of the FSS resources\>
+
 > OCI_KEY=\<paste output of * cat ~/.oci/pvt_key.pem | base64 -w 0 * \>
 
 ## Image
