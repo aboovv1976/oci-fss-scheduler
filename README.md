@@ -1,6 +1,10 @@
 # OCI FSS Scheduler
 
-This is a script used to create and delete FSS snapshots based on a pre-defined schedule. The scheduler can be used in three ways.
+This is a script used to create and delete FSS snapshots based on a pre-defined schedule. 
+
+## Usage
+
+The scheduler can be used in three ways.
 
 1. As a stand alone script - fss-scheduler.py. This can be placed in cron job to run every one hour. The script will create and delete (expire) snapshots as defined in scheduler.cfg file or using FSS_CKPT_SHCEDULER_CFG= environment variable.
 
@@ -8,7 +12,7 @@ This is a script used to create and delete FSS snapshots based on a pre-defined 
 
 3. Run in K8s cluster with the above docker image  as cron job 
 
-## Usage
+### Simple usage
 
 In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py (one time use) or install it in cron to run every hour. The OCI API python modules should be installed. See [OCI SDK for Python](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/pythonsdk.htm). 
 
@@ -22,7 +26,7 @@ This will run just once but requires the above to be installed as a cronjob. The
 
 ### Kubernetes
 
-kubectl apply -f k8s-cron.yaml
+> kubectl apply -f k8s-cron.yaml
 
 The environment variables should be updated in the k8s-cron.yaml file. See the next sections for the required environment variable. That is *FSS_CKPT_SHCEDULER_CFG* and OCI authentication environment variables. 
 
