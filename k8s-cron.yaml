@@ -25,7 +25,7 @@ spec:
             - name: OCI_TENANCY_ID
               value: <tenancy ocid from ~/.oci/config>
             - name: OCI_REGION
-              value: <oci region
+              value: <oci region>
             - name: OCI_COMPARTMENT_ID
               value: <compartment ocid of the FSS resources>
             - name: FSS_CKPT_SHCEDULER_CFG

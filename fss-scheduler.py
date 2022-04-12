@@ -77,7 +77,7 @@ def allSchedulerSnapShots(ocid):
             }
     )
     if r["status"] != 200:
-        critical(f"OCI API list snapshot failed with status code {r['status']}")
+        critical(f"FS: {FileSystems[ocid]}, OCI API list snapshot failed with status code {r['status']}")
         sys.exit(1)
 
     for i in r["out"]:
@@ -130,9 +130,9 @@ def createSnapshot(ocid,name,expiry):
         }
     )
     if r["status"] == 200:
-        info(f"Created Snapshot: {name}")
+        info(f"FS: {FileSystems[ocid]}, Created Snapshot: {name}")
     else:
-        error(f"Snapshot creation failed for {name} for FS ocid: {ocid}")
+        error(f"FS: {FileSystems[ocid]}, Snapshot creation failed for {name} for FS ocid: {ocid}")
 
 def expiredSnapshots(ocid,pattern):
     items=[]
@@ -152,8 +152,9 @@ def expiredSnapshots(ocid,pattern):
     return items
 
 Snapshots={}
-SchedulerCfgFile=os.environ["FSS_CKPT_SHCEDULER_CFG_FILE"] if "FSS_CKPT_SHCEDULER_CFG_FILE" in os.environ else 'schedule.cfg'
+SchedulerCfgFile=os.environ["FSS_CKPT_SHCEDULER_CFG_FILE"] if "FSS_CKPT_SHCEDULER_CFG_FILE" in os.environ else f"{os.path.dirname(os.path.abspath(sys.argv[0]))}/schedule.cfg" 
 SchedulerCfg=None
+
 try:
     cfg = os.environ["FSS_CKPT_SHCEDULER_CFG"] 
     SchedulerCfg=json.loads(cfg)
@@ -164,12 +165,23 @@ except:
         sys.exit(1)
 
 DatePattern="%Y_%m_%d-%H_%M_%S"
-
+FileSystems={}
 
 for ocid in SchedulerCfg.keys():
     if ocid=='DEFAULT':
         continue
-    x={ ocid : dict(SchedulerCfg[ocid].items()) }
+    if ocid not in FileSystems:
+        out=ociApi(
+            FSSClient.get_file_system,
+            args = {
+                "file_system_id": ocid
+            }
+        )
+        if out["status"] != 200:
+            critical(f"Failed to get FS OCID {ocid} details")
+            continue
+        FileSystems[ocid]=out["out"].display_name
+
     schedules=SchedulerCfg[ocid].items()
     allSchedulerSnapShots(ocid)
     for s in  schedules:
@@ -177,8 +189,8 @@ for ocid in SchedulerCfg.keys():
         if not details:
             continue
         for snapshot in expiredSnapshots(ocid, details["pName"]):
-            info(f"Expired snapshot found for {details['pName']}: {snapshot['name']}, Expired {datetime.datetime.strftime(snapshot['expiry'],'%Y/%m/%d %H:%M:%S')}")
+            info(f"FS: {FileSystems[ocid]}, Expired snapshot found for {details['pName']}: {snapshot['name']}, Expired {datetime.datetime.strftime(snapshot['expiry'],'%Y/%m/%d %H:%M:%S')}")
             deleteSnapshot(snapshot["ocid"],snapshot['name'])
         if creationRequired(ocid,details['pName'],details["pTime"]):
-            info(f"Snapshot Creation required with parameters - Name:{details['name']}, Expiry: {details['nTime']}")
+            info(f"FS: {FileSystems[ocid]}, Snapshot Creation required with parameters - Name:{details['name']}, Expiry: {details['nTime']}")
             createSnapshot(ocid,details['name'],details['nTime'])

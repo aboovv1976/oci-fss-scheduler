@@ -10,6 +10,6 @@ WORKDIR /usr/src/app
 COPY  fss-scheduler.py .
 COPY  oci_api.py .
 COPY  schedule.cfg .
+COPY requirements.txt .
 
-CMD ["/bin/echo", "Hello, container for oci ckpt scheduler" ]
-
+CMD ["python", "./fss-scheduler.py" ]
