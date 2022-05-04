@@ -1,6 +1,6 @@
 
 
-This repository provides a few techniques to manage OCI FSS snapshots. Deletion of snapshots based on age and automatically scheduling the creation and deletion of snapshots. 
+This repository provides a few techniques to manage OCI FSS snapshots. Deletion of snapshots based on age and automatically scheduling the creation and deletion of snapshots.  The files are in ***snapshot-scheduler-tool*** folder
 
 ***1) OCI FSS Snapshot delete***  
 ***2) OCI FSS Snapshot Scheduler***
@@ -103,20 +103,20 @@ $
 
 The advantage of using docker image is that it comes with all the modules installed and should not have any other dependancies. 
 
-> sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler
+> sudo docker run -it --env-file env aboovv/fss-snapshot-scheduler
 
 This will run just once but requires the above to be installed as a cronjob. The env file should be populated as mentioned in the next section. That is *FSS_CKPT_SHCEDULER_CFG* and OCI authentication environment variables. 
 
 #### Sample
 ```
-$ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler  
+$ sudo docker run -it --env-file env aboovv/fss-snapshot-scheduler
 2022-04-12T15:41:15.601Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:hourly_snapshot_2022_04_12-15_41_15, Expiry: 2022-04-13 15:41:15.601073  
 2022-04-12T15:41:18.354Z - fss-scheduler - INFO - Created Snapshot: hourly_snapshot_2022_04_12-15_41_15  
 2022-04-12T15:41:18.424Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:monthly_snapshot_2022_04_12-15_41_18, Expiry: 2024-04-12 15:41:18.424715  
 2022-04-12T15:41:28.678Z - fss-scheduler - INFO - Created Snapshot: monthly_snapshot_2022_04_12-15_41_18  
 2022-04-12T15:41:28.679Z - fss-scheduler - INFO - Snapshot Creation required with parameters - Name:yearly_snapshot_2022_04_12-15_41_28, Expiry: 2122-04-12 15:41:28.678960  
 2022-04-12T15:41:30.713Z - fss-scheduler - INFO - Created Snapshot: yearly_snapshot_2022_04_12-15_41_28  
-$ sudo docker run -it --env-file env iad.ocir.io/fsssolutions/fss-sn-scheduler  
+$ sudo docker run -it --env-file env aboovv/fss-snapshot-scheduler 
 $ cat env  
 OCI_USER_ID=ocid1.user.oc1..<removed>  
 OCI_TENANCY_ID=ocid1.tenancy.oc1..<removed>  
@@ -161,7 +161,7 @@ spec:
        spec:
         containers:
         - name: fss-scheduler
-          image: iad.ocir.io/fsssolutions/fss-sn-scheduler
+          image: aboovv/fss-snapshot-scheduler
           command: [ "python" ]
           args: [ "fss-scheduler.py" ]
           env:
@@ -233,7 +233,7 @@ These are the environment variables and the values can be directly copied from t
   
 ## Image
 
-The Docker file is provided. However, the image is available at ***iad.ocir.io/fsssolutions/fss-sn-scheduler***
+The Docker file is provided. However, the image is available at ***aboovv/fss-snapshot-scheduler***
 
 ## Standalone script cronjob
 
