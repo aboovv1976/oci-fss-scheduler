@@ -7,9 +7,9 @@ RUN apk add --update py-pip python3-dev alpine-sdk libffi libffi-dev openssl ope
 RUN python -m pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 WORKDIR /usr/src/app
-COPY  fss-scheduler.py .
-COPY  oci_api.py .
+COPY  fss-snapshot-scheduler.py .
 COPY  schedule.cfg .
+COPY fss-snapshot-delete.py .
 COPY requirements.txt .
 
 CMD ["python", "./fss-scheduler.py" ]
