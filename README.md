@@ -1,9 +1,11 @@
 
 
-This repository provides a few techniques to manage OCI FSS snapshots. Deletion of snapshots based on age and automatically scheduling the creation and deletion of snapshots.  The files are in ***snapshot-scheduler-tool*** folder
+This repository provides a few techniques to manage OCI FSS snapshots. Deletion of snapshots based on age and automatically scheduling the creation and deletion of snapshots.  The files are in ***snapshot-scheduler-tool*** folder. 
 
 ***1) OCI FSS Snapshot delete***  
 ***2) OCI FSS Snapshot Scheduler***
+
+Note: The provided aboovv/fss-snapshot-scheduler image is a generic OCI CLI/API python container that can be used with any API/CLI requirements. 
 
 # OCI FSS Snapshot delete
 
