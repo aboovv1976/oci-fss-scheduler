@@ -12,4 +12,4 @@ COPY  schedule.cfg .
 COPY fss-snapshot-delete.py .
 COPY requirements.txt .
 
-CMD ["python", "./fss-scheduler.py" ]
+CMD ["python", "./fss-snapshot-scheduler.py" ]
