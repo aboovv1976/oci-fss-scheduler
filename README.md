@@ -2,58 +2,10 @@
 
 This repository provides a few techniques to manage OCI FSS snapshots. Deletion of snapshots based on age and automatically scheduling the creation and deletion of snapshots.  The files are in ***snapshot-scheduler-tool*** folder. 
 
-***1) OCI FSS Snapshot delete***  
-***2) OCI FSS Snapshot Scheduler***
+***1) OCI FSS Snapshot Schedule***  
+***2) OCI FSS Snapshot delete***
 
 Note: The provided aboovv/fss-snapshot-scheduler image is a generic OCI CLI/API python container that can be used with any API/CLI requirements. 
-
-# OCI FSS Snapshot delete
-
-The repository provides fss-snapshot-delete.py as a standalone script to delete snapshots based on its age. This is a seperate script to the snapshot scheduler. 
-
-## Usage
-```
-$ python ./fss-snapshot-delete.py 
-usage: fss-snapshot-delete.py [-h] --file-system-id FILE_SYSTEM_ID
-                              [--seconds SECONDS] [--hours HOURS]
-                              [--days DAYS] [--minutes MINUTES] [--delete]
-fss-snapshot-delete.py: error: the following arguments are required: --file-system-id
-$
-```
-#### List all snapshots
-
-```
-$ python ./fss-snapshot-delete.py  --file-system-id ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa 
-Name: hourly_snapshot_2022_04_12-17_15_29 Time: 04/12/2022, 17:15:29
-Name: daily_snapshot_2022_04_12-16_17_04 Time: 04/12/2022, 16:17:04
-Name: hourly_snapshot_2022_04_12-15_41_15 Time: 04/12/2022, 15:41:15
-Name: yearly_snapshot_2022_04_11-15_56_26 Time: 04/11/2022, 15:56:27
-Name: monthly_snapshot_2022_04_11-15_56_25 Time: 04/11/2022, 15:56:25
-Name: daily_snapshot_2022_04_11-15_56_22 Time: 04/11/2022, 15:56:24
-$
-```
-
-#### List snapshots one day old
-
-```
-$ python ./fss-snapshot-delete.py  --file-system-id ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa  --days 1
-Name: yearly_snapshot_2022_04_11-15_56_26 Time: 04/11/2022, 15:56:27
-Name: monthly_snapshot_2022_04_11-15_56_25 Time: 04/11/2022, 15:56:25
-Name: daily_snapshot_2022_04_11-15_56_22 Time: 04/11/2022, 15:56:24
-```
-#### Delete snapshots older than 1 day
-
-```
-$ python ./fss-snapshot-delete.py  --file-system-id ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa  --days 1 --delete
-Deleting Name: yearly_snapshot_2022_04_11-15_56_26 Time: 04/11/2022, 15:56:27
-Deleted Snapshot: yearly_snapshot_2022_04_11-15_56_26
-Deleting Name: monthly_snapshot_2022_04_11-15_56_25 Time: 04/11/2022, 15:56:25
-Deleted Snapshot: monthly_snapshot_2022_04_11-15_56_25
-Deleting Name: daily_snapshot_2022_04_11-15_56_22 Time: 04/11/2022, 15:56:24
-Deleted Snapshot: daily_snapshot_2022_04_11-15_56_22
-[opc@kube scheduler]$
-```
-Use any combination of seconds, hours, minutes and days for listing and deleting. 
 
 
 # OCI FSS Snapshot Scheduler
@@ -72,7 +24,7 @@ The scheduler can be used in three ways.
 
 ### Option 1: Standalone script
 
-In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py (one time use) 
+In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py
 
 - The OCI API python modules should be installed. See [OCI SDK for Python](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/pythonsdk.htm). 
 
@@ -249,4 +201,51 @@ Configure it for every hour as follows. The user for which this crontab is confi
 
 If the scheduler to be run as a kubernetes job, a sample k8s-cron.yaml file is included along with this. The environment variables section needs to be filled. If feels insecure, use Kubernetes secrets for these environment variables instead. 
 
+# OCI FSS Snapshot delete
+
+The repository provides fss-snapshot-delete.py as a standalone script to delete snapshots based on its age. This is a seperate script to the snapshot scheduler. 
+
+## Usage
+```
+$ python ./fss-snapshot-delete.py 
+usage: fss-snapshot-delete.py [-h] --file-system-id FILE_SYSTEM_ID
+                              [--seconds SECONDS] [--hours HOURS]
+                              [--days DAYS] [--minutes MINUTES] [--delete]
+fss-snapshot-delete.py: error: the following arguments are required: --file-system-id
+$
+```
+#### List all snapshots
+
+```
+$ python ./fss-snapshot-delete.py  --file-system-id ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa 
+Name: hourly_snapshot_2022_04_12-17_15_29 Time: 04/12/2022, 17:15:29
+Name: daily_snapshot_2022_04_12-16_17_04 Time: 04/12/2022, 16:17:04
+Name: hourly_snapshot_2022_04_12-15_41_15 Time: 04/12/2022, 15:41:15
+Name: yearly_snapshot_2022_04_11-15_56_26 Time: 04/11/2022, 15:56:27
+Name: monthly_snapshot_2022_04_11-15_56_25 Time: 04/11/2022, 15:56:25
+Name: daily_snapshot_2022_04_11-15_56_22 Time: 04/11/2022, 15:56:24
+$
+```
+
+#### List snapshots one day old
+
+```
+$ python ./fss-snapshot-delete.py  --file-system-id ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa  --days 1
+Name: yearly_snapshot_2022_04_11-15_56_26 Time: 04/11/2022, 15:56:27
+Name: monthly_snapshot_2022_04_11-15_56_25 Time: 04/11/2022, 15:56:25
+Name: daily_snapshot_2022_04_11-15_56_22 Time: 04/11/2022, 15:56:24
+```
+#### Delete snapshots older than 1 day
+
+```
+$ python ./fss-snapshot-delete.py  --file-system-id ocid1.filesystem.oc1.iad.aaaaaaaaaac2b2xbnfqwillqojxwiotjmfsc2ylefuzaaaaa  --days 1 --delete
+Deleting Name: yearly_snapshot_2022_04_11-15_56_26 Time: 04/11/2022, 15:56:27
+Deleted Snapshot: yearly_snapshot_2022_04_11-15_56_26
+Deleting Name: monthly_snapshot_2022_04_11-15_56_25 Time: 04/11/2022, 15:56:25
+Deleted Snapshot: monthly_snapshot_2022_04_11-15_56_25
+Deleting Name: daily_snapshot_2022_04_11-15_56_22 Time: 04/11/2022, 15:56:24
+Deleted Snapshot: daily_snapshot_2022_04_11-15_56_22
+[opc@kube scheduler]$
+```
+Use any combination of seconds, hours, minutes and days for listing and deleting. 
 
