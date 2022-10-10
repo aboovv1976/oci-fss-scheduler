@@ -24,11 +24,11 @@ The scheduler can be used in three ways.
 
 ### Option 1: Standalone script
 
-In its simplest form, just copy the fss-scheduler.py, oci_api.py and schedule.cfg and then modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py
+In its simplest form, just copy the fss-scheduler.py, schedule.cfg and modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py
 
 - The OCI API python modules should be installed. See [OCI SDK for Python](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/pythonsdk.htm). 
 
-- install it in cron to run every hour. The user the script is installed as cron should have the OCI configuration created (or use the environment variable for OCI credentials).  [Configuring the CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliconfigure.htm)
+- install it in cron to run every hour (Test the script before installing in cron). The user the script is installed as cron should have the OCI configuration created (or use the environment variable for OCI credentials).  [Configuring the CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliconfigure.htm)
 
 #### Sample
 
