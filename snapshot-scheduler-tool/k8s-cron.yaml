@@ -14,7 +14,7 @@ spec:
         - name: fss-scheduler
           image: iad.ocir.io/fsssolutions/fss-sn-scheduler
           command: [ "python" ]
-          args: [ "fss-scheduler.py" ]
+          args: [ "fss-snapshot-scheduler.py" ]
           env:
             - name: OCI_USER_ID
               value: <user ocid from ~/.oci/config>
