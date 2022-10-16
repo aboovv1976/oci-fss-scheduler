@@ -16,7 +16,7 @@ This is a script used to create and delete FSS snapshots based on a pre-defined 
 
 The scheduler can be used in three ways.
 
-***Option 1.*** As a stand alone script - fss-scheduler.py. This can be placed in cron job to run every one hour. The script will create and delete (expire) snapshots as defined in scheduler.cfg file or using *FSS_CKPT_SHCEDULER_CFG* environment variable.
+***Option 1.*** As a stand alone script - fss-snapsht-scheduler.py. This can be placed in cron job to run every one hour. The script will create and delete (expire) snapshots as defined in scheduler.cfg file or using *FSS_CKPT_SHCEDULER_CFG* environment variable.
 
 ***Option 2.*** This includes a Dockerfile that can be used to build a docker image. This is based on alpine Linux and includes all the required modules including oci api. Run the docker image every hour. This is a container and has no pre-requisites such as OCI API module or other libraries. 
 
@@ -24,7 +24,7 @@ The scheduler can be used in three ways.
 
 ### Option 1: Standalone script
 
-In its simplest form, just copy the fss-scheduler.py, schedule.cfg and modify the schedule.cfg with FS ocid and schedule details.  Run fss-scheduler.py
+In its simplest form, just copy the fss-snapshot-scheduler.py, schedule.cfg and modify the schedule.cfg with FS ocid and schedule details.  Run fss-snapshot-scheduler.py
 
 - The OCI API python modules should be installed. See [OCI SDK for Python](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/pythonsdk.htm). 
 
@@ -33,7 +33,7 @@ In its simplest form, just copy the fss-scheduler.py, schedule.cfg and modify th
 #### Sample
 
 ```
-$ python ./fss-scheduler.py  
+$ python ./fss-snapshot-scheduler.py  
 2022-04-12T15:30:16.245Z - fss-scheduler - INFO - Creating OCI config file from environment variables failed, error:'OCI_USER_ID' Using default config file  
 2022-04-12T15:30:16.630Z - fss-scheduler - INFO - Expired snapshot found for hourly_snapshot: hourly_snapshot_2022_04_12-02_49_20, Expired 2022/04/12 03:49:20   
 2022-04-12T15:30:17.434Z - fss-scheduler - INFO - Deleted Snapshot: hourly_snapshot_2022_04_12-02_49_20  
@@ -48,7 +48,7 @@ Monthly_SnapShot = 1m:1y
 Yearly_Snapshot =  1y:1c  
 $ 
 $ crontab -l
-0 * * * *  python /home/opc/scheduler/fss-scheduler.py
+0 * * * *  python /home/opc/scheduler/fss-snapshot-scheduler.py
 $ 
 
 ```
@@ -194,7 +194,7 @@ The Docker file is provided. However, the image is available at ***aboovv/fss-sn
 Configure it for every hour as follows. The user for which this crontab is configured should have configured OCI CLI access. [Configuring the CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliconfigure.htm). If its not configured, the OCI environment variables should be configured for authentication. 
 
 ```
-0 * * * *  python /home/opc/scheduler/fss-scheduler.py
+0 * * * *  python /home/opc/scheduler/fss-snapshot-scheduler.py
 ```
 
 ## Kubernetes cron job
