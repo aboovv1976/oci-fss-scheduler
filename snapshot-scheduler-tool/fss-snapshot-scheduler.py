@@ -180,10 +180,15 @@ def allSchedulerSnapShots(ocid):
         )
     Snapshots[ocid]=items
 
+# The create API can take varying times to complete creating a jitter situation when comparing times. 
+# So, allow 0.5%
+def around()
+    return t - t * 0.005
+
 def creationRequired(ocid,pattern, t):
     for snapshot in Snapshots[ocid]:
         if snapshot["name"].lower().startswith(pattern + "_"):
-            if snapshot["created"] >  t:
+            if snapshot["created"] >=  around(t):
                 return False
     return True
 
