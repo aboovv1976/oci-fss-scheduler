@@ -182,7 +182,7 @@ def allSchedulerSnapShots(ocid):
 
 # The create API can take varying times to complete creating a jitter situation when comparing times. 
 # So, allow 0.1 jitter%
-def around(t)
+def around(t):
     return t + t * 0.01
 
 def creationRequired(ocid,pattern, t):
