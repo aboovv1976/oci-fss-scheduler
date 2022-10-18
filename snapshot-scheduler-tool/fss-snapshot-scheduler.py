@@ -140,15 +140,16 @@ def scheduleDetails(schedule):
     if pd and nd:
         pTime=datetime.datetime.utcnow() - pd
         nTime=datetime.datetime.utcnow() + nd
-        return(
-            {
+        freq=datetime.datetime.utcnow().timestamp() - pTime.timestamp()
+        details = {
                 "name": name,
                 "pName": p,
                 "ctime": datetime.datetime.now(),
                 "pTime": pTime,
-                "nTime": nTime
+                "nTime": nTime,
+                "frequency": freq
             }
-        )
+        return details
     return None
 
 def allSchedulerSnapShots(ocid):
@@ -180,15 +181,12 @@ def allSchedulerSnapShots(ocid):
         )
     Snapshots[ocid]=items
 
-# The create API can take varying times to complete creating a jitter situation when comparing times. 
-# So, allow 0.1 jitter%
-def around(t):
-    return t + t * 0.01
-
-def creationRequired(ocid,pattern, t):
+def creationRequired(ocid,pattern, freq):
     for snapshot in Snapshots[ocid]:
         if snapshot["name"].lower().startswith(pattern + "_"):
-            if snapshot["created"] >=  around(t):
+            now=datetime.datetime.utcnow().timestamp()
+            # The APIs can take varying times to complete. So, allow 1% jitter
+            if snapshot["created"].timestamp() + freq * 0.99  > now:
                 return False
     return True
 
@@ -281,6 +279,6 @@ for ocid in SchedulerCfg.keys():
         for snapshot in expiredSnapshots(ocid, details["pName"]):
             info(f"FS: {FileSystems[ocid]}, Expired snapshot found for {details['pName']}: {snapshot['name']}, Expired {datetime.datetime.strftime(snapshot['expiry'],'%Y/%m/%d %H:%M:%S')}")
             deleteSnapshot(snapshot["ocid"],snapshot['name'])
-        if creationRequired(ocid,details['pName'],details["pTime"]):
+        if creationRequired(ocid,details['pName'],details['frequency']):
             info(f"FS: {FileSystems[ocid]}, Snapshot Creation required with parameters - Name:{details['name']}, Expiry: {details['nTime']}")
             createSnapshot(ocid,details['name'],details['nTime'])
